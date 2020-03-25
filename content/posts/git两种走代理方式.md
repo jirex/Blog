@@ -1,6 +1,7 @@
 +++
 title = "Git两种走代理方式"
 author = ["jirex"]
+lastmod = 2020-03-25T17:07:09+08:00
 tags = ["git"]
 draft = false
 +++
@@ -22,7 +23,7 @@ git config --global --unset https.proxy
 ## SSH形式 {#ssh形式}
 
 `git clone git@github.com:owner/repo.git`
-修改 ~/.ssh/config 文件（不存在则新建）：
+`修改 ~/.ssh/config 文件（不存在则新建）：`
 
 ```bash
 # 必须是 github.com
