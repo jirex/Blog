@@ -1,7 +1,7 @@
 +++
 title = "org-mode"
 author = ["jirex"]
-lastmod = 2020-03-25T17:22:11+08:00
+lastmod = 2020-03-26T09:26:34+08:00
 draft = false
 +++
 
@@ -31,7 +31,7 @@ draft = false
 外部链接[[][]],前面是链接, 后面是文字
 
 
-### <a id="orge3a3b6c"></a> {#}
+### <a id="org24b3aff"></a> {#}
 
 内部链接
 
@@ -91,12 +91,12 @@ echo "hello world"
 
 ### todo关键字 {#todo关键字}
 
-\#+BEGIN-SRC Emacs-lisp
+```elisp
 (setq org-todo-keywords
 '((type "工作(w!)" "学习(s!)" "休闲(l!)" "|")
     (sequence "PENDING(p!)" "TODO(t!)"  "|" "DONE(d!)" "ABORT(a@/!)")
 ))
-\#+END\_SRC
+```
 
 -   "|" 用来分割 `未完成` 和 `完成` 两种状态
 -   "!" 表示时间戳，改变到该状态是插入时间戳
@@ -105,19 +105,19 @@ echo "hello world"
 
 ### 改变TODO关键字外观 {#改变todo关键字外观}
 
-\#+BEGIN-SRC Emacs-lisp
+```elisp
 (setq org-todo-keyword-faces
 '(("PENDING" .   (:background "LightGreen" :foreground "gray" :weight bold))
     ("TODO" .      (:background "DarkOrange" :foreground "black" :weight bold))
     ("DONE" .      (:background "azure" :foreground "Darkgreen" :weight bold))
     ("ABORT" .     (:background "gray" :foreground "black"))
 ))
-\#+END\_SRC
+```
 
 
 ### 改变优先级外观 {#改变优先级外观}
 
-\#+BEGIN-SRC Emacs-lisp
+```elisp
 ;; 优先级范围和默认任务的优先级
 (setq org-highest-priority ?A)
 (setq org-lowest-priority  ?E)
@@ -130,14 +130,14 @@ echo "hello world"
     (?D . (:background "DodgerBlue" :foreground "black" :weight bold))
     (?E . (:background "SkyBlue" :foreground "black" :weight bold))
 ))
-\#+END\_SRC
+```
 
 
 ### 预定义标签 {#预定义标签}
 
-\#+BEGIN-SRC Emacs-lisp
+```elisp
 (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
-\#+END\_SRC
+```
 
 
 ## org functions {#org-functions}
