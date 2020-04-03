@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Docker学习笔记 // jirex&#39;s Blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="[jirex]">
+<meta name="generator" content="Hugo 0.56.1" />
+
+
+  <meta property="og:title" content="Docker学习笔记" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://jirex.netlify.com/posts/docker/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://jirex.netlify.com//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="jirex&#39;s Blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">jirex&#39;s Blog</h1>
+    <h2 class="brand-tagline">Emacs, Org Mode, Docker
+iOS, Python, Php, Vue
+Programmer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://jirex.netlify.com/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="https://github.com/jirex" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="https://www.twitter.com/jirex1119" target="_blank"><i class='fa fa-twitter'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#概念">概念</a>
+<ul>
+<li><a href="#镜像-image">镜像 （image)</a></li>
+<li><a href="#容器-container">容器 （container)</a></li>
+<li><a href="#仓库-repository">仓库 （Repository）</a></li>
+</ul></li>
+<li><a href="#安装">安装</a>
+<ul>
+<li><a href="#centos">centos</a></li>
+</ul></li>
+<li><a href="#理念">理念</a>
+<ul>
+<li><a href="#一个容器只跑一个程序-容器间通过网络交互">一个容器只跑一个程序, 容器间通过网络交互</a></li>
+<li><a href="#分层存储-容器间相互隔离-但他们的底层是共享的">分层存储， 容器间相互隔离，但他们的底层是共享的</a></li>
+</ul></li>
+<li><a href="#dockerfile">Dockerfile</a>
+<ul>
+<li><a href="#常用命令">常用命令</a>
+<ul>
+<li><a href="#from">FROM</a></li>
+<li><a href="#run">RUN</a></li>
+<li><a href="#copy">COPY</a></li>
+<li><a href="#cmd">CMD</a></li>
+<li><a href="#entrypoint">ENTRYPOINT</a></li>
+<li><a href="#env">ENV</a></li>
+<li><a href="#workdir">WORKDIR</a></li>
+</ul></li>
+<li><a href="#指令区分">指令区分</a>
+<ul>
+<li><a href="#run-cmd-entrypoint">RUN、CMD、ENTRYPOINT</a></li>
+<li><a href="#add-copy">ADD、COPY</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#docker-compose">docker-compose</a>
+<ul>
+<li><a href="#目的">目的</a></li>
+<li><a href="#安装-1">安装</a></li>
+<li><a href="#docker-compose-dot-yml文件常用命令">docker-compose.yml文件常用命令</a>
+<ul>
+<li><a href="#image">image</a></li>
+<li><a href="#build">build</a></li>
+<li><a href="#command">command</a></li>
+<li><a href="#container-name">container_name</a></li>
+<li><a href="#depends-on">depends_on</a></li>
+<li><a href="#environment">environment</a></li>
+<li><a href="#ports">ports</a></li>
+<li><a href="#volumes">volumes</a></li>
+<li><a href="#restart">restart</a></li>
+<li><a href="#env-file">env_file</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#常用命令-1">常用命令</a>
+<ul>
+<li><a href="#docker-compose-up-build-d">docker-compose up &ndash;build -d</a></li>
+<li><a href="#docker-compose-stop">docker-compose stop</a></li>
+<li><a href="#docker-compose-ps">docker-compose ps</a></li>
+<li><a href="#docker-image-ls-a">docker image ls -a</a></li>
+<li><a href="#docker-container-ls-a">docker container ls -a</a></li>
+<li><a href="#docker-image-prune">docker image prune</a></li>
+<li><a href="#docker-container-prune">docker container prune</a></li>
+<li><a href="#docker-exec-it-contaner-id-bash">docker exec -it <contaner id> bash</a></li>
+<li><a href="#docker-compose-logs-tail-10-f">docker-compose logs &ndash;tail 10 -f</a></li>
+</ul></li>
+<li><a href="#node项目样例">node项目样例</a>
+<ul>
+<li><a href="#dockfile">Dockfile</a></li>
+<li><a href="#docker-compose-dot-yml">docker-compose.yml</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/posts/docker/">Docker学习笔记</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>25</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2020</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">[jirex]</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            
+
+<h2 id="概念">概念</h2>
+
+<h3 id="镜像-image">镜像 （image)</h3>
+
+<ul>
+<li>相当于启动盘，系统盘</li>
+
+<li><p>分层存储，有点像git，类似指针的概念</p>
+
+<figure>
+    <img src="https://raw.githubusercontent.com/jirex/static-center/master/img/20200325133640.png" width="50%"/> 
+</figure>
+</li>
+</ul>
+
+<h3 id="容器-container">容器 （container)</h3>
+
+<ul>
+<li>从镜像启动，类 和 实例的关系</li>
+<li>会在镜像基础上，添加一层存储层，但容器被删除时，存储层的改变也会被删除，所以不要在里面写入任何数据，用数据卷</li>
+</ul>
+
+<h3 id="仓库-repository">仓库 （Repository）</h3>
+
+<ul>
+<li>镜像的仓库</li>
+</ul>
+
+<h2 id="安装">安装</h2>
+
+<h3 id="centos">centos</h3>
+
+<ul>
+<li><p>删除旧版本</p>
+
+<pre><code class="language-bash">sudo yum remove docker \
+           docker-client \
+           docker-client-latest \
+           docker-common \
+           docker-latest \
+           docker-latest-logrotate \
+           docker-logrotate \
+           docker-selinux \
+           docker-engine-selinux \
+           docker-engine
+</code></pre></li>
+
+<li><p>使用yum安装</p>
+
+<pre><code class="language-bash"># step 1: 安装必要的一些系统工具
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+# Step 2: 添加软件源信息
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+# Step 3: 更新并安装 Docker-CE
+sudo yum makecache fast
+sudo yum -y install docker-ce
+# Step 4: 开启Docker服务
+sudo service docker start
+</code></pre></li>
+
+<li><p>建立docker用户组，不用sudo来启动docker</p>
+
+<pre><code class="language-bash">#建立docker用户组
+sudo groupadd docker
+#将当前用户加入用户组
+sudo usermod -aG docker $USER
+</code></pre></li>
+
+<li><p>测试安装</p>
+
+<pre><code class="language-bash">docker version
+</code></pre></li>
+
+<li><p>镜像加速 (如果服务器在国内)
+编辑 <code>/etc/docker/daemon.json</code>, 然后重启docker</p>
+
+<pre><code class="language-json">{
+   &quot;registry-mirrors&quot;: [
+       &quot;https://dockerhub.azk8s.cn&quot;,
+       &quot;https://hub-mirror.c.163.com&quot;
+   ]
+}
+</code></pre></li>
+</ul>
+
+<h2 id="理念">理念</h2>
+
+<h3 id="一个容器只跑一个程序-容器间通过网络交互">一个容器只跑一个程序, 容器间通过网络交互</h3>
+
+<h3 id="分层存储-容器间相互隔离-但他们的底层是共享的">分层存储， 容器间相互隔离，但他们的底层是共享的</h3>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<h3 id="常用命令">常用命令</h3>
+
+<h4 id="from">FROM</h4>
+
+<p><code>FROM ubuntu:latest</code>
+指定基础镜像</p>
+
+<h4 id="run">RUN</h4>
+
+<p><code>RUN ls -al</code>
+运行命令</p>
+
+<h4 id="copy">COPY</h4>
+
+<p><code>COPY . /var/www/</code>
+复制文件到容器内部
+<code>COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;源路径&gt;... &lt;目标路径&gt;</code></p>
+
+<h4 id="cmd">CMD</h4>
+
+<p><code>CMD [&quot;node&quot;,&quot;test.js&quot;]</code>
+容器启动命令，保持容器启动，需要程序不以daemon形式运行</p>
+
+<h4 id="entrypoint">ENTRYPOINT</h4>
+
+<p><code>ENTRYPOINT [&quot;docker-entrypoint.sh&quot;]</code>
+容器运行前准备工作入口点，在CMD前执行，不常用</p>
+
+<h4 id="env">ENV</h4>
+
+<p>ENV Host=&ldquo;local&rdquo; IsTest=true
+环境变量, php、python都有获取环境变量的方法</p>
+
+<h4 id="workdir">WORKDIR</h4>
+
+<p><code>WORKDIR /usr/share/nginx/html/</code>
+切换工作目录，接下去的命令都会在这个目录下执行
+不要用RUN cd &hellip;</p>
+
+<h3 id="指令区分">指令区分</h3>
+
+<h4 id="run-cmd-entrypoint">RUN、CMD、ENTRYPOINT</h4>
+
+<ul>
+<li>RUN 指令是在容器被构建时运行的命令</li>
+<li>CMD 、 ENTRYPOINT 是启动容器时执行 shell 命令</li>
+<li>ENTRYPOINT在CMD前</li>
+</ul>
+
+<h4 id="add-copy">ADD、COPY</h4>
+
+<ul>
+<li>复制文件都用COPY</li>
+<li>ADD可以解压缩文件</li>
+</ul>
+
+<h2 id="docker-compose">docker-compose</h2>
+
+<h3 id="目的">目的</h3>
+
+<p>像web这种需要多种程序一起运作，比如php、redis等，需要把多个容器组成一个项目，单独用Dockfile不好管理，
+还需要容器之间交互, docker-compose比较简单，还有k8s比较流行</p>
+
+<h3 id="安装-1">安装</h3>
+
+<ul>
+<li>mac自带</li>
+<li>linux</li>
+</ul>
+
+<!--listend-->
+
+<pre><code class="language-bash">curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+</code></pre>
+
+<h3 id="docker-compose-dot-yml文件常用命令">docker-compose.yml文件常用命令</h3>
+
+<h4 id="image">image</h4>
+
+<p>指定镜像，可以不用写dockerfile</p>
+
+<h4 id="build">build</h4>
+
+<p>指定Dockerfile文件路径，可以是相对路径</p>
+
+<pre><code class="language-yaml">version: '3'
+services:
+
+    webapp:
+        build: ./dir
+</code></pre>
+
+<p>也可以指定Dockerfile名字</p>
+
+<pre><code class="language-yaml">version: '3'
+services:
+
+    webapp:
+        build:
+            context: ./dir
+            dockerfile: Dockerfile-alternate
+</code></pre>
+
+<h4 id="command">command</h4>
+
+<p>容器启动后执行的命令，和Dockerfile中的CMD是一样的</p>
+
+<h4 id="container-name">container_name</h4>
+
+<p>容器名字，挺有用的，以后看log的时候方便</p>
+
+<h4 id="depends-on">depends_on</h4>
+
+<p>容器依赖的其他容器，可以在其他容器启动后再启动</p>
+
+<pre><code class="language-yaml">version: '3'
+
+services:
+    web:
+        build: .
+        depends_on:
+        - db
+        - redis
+
+    redis:
+        image: redis
+
+    db:
+        image: postgres
+</code></pre>
+
+<h4 id="environment">environment</h4>
+
+<p>指定环境变量</p>
+
+<pre><code class="language-yaml">environment:
+    - IsTest='true'
+    - Host=local
+</code></pre>
+
+<h4 id="ports">ports</h4>
+
+<p>暴露端口信息，可以让宿主机用</p>
+
+<pre><code class="language-yaml">ports:
+  - &quot;3000&quot;
+  - &quot;8000:8000&quot;
+  - &quot;49100:22&quot;
+  - &quot;127.0.0.1:8001:8001&quot;
+</code></pre>
+
+<h4 id="volumes">volumes</h4>
+
+<p>挂载宿主机路径到容器，可读可写，可以用于开发环境，不用重启容器</p>
+
+<pre><code class="language-yaml">volumes:
+    - /var/lib/mysql
+    - cache/:/tmp/cache
+    - ~/configs:/etc/configs/:ro
+</code></pre>
+
+<h4 id="restart">restart</h4>
+
+<p>如果容器出错停止，是否重启，可以不用守护程序了，比如forever</p>
+
+<pre><code class="language-yaml">restart: always
+</code></pre>
+
+<h4 id="env-file">env_file</h4>
+
+<p>环境变量文件, docker-compose默认会读取系统和当前文件夹下.env文件</p>
+
+<pre><code class="language-yaml">env_file:
+  - ./common.env
+  - ./apps/web.env
+  - /opt/secrets.env
+</code></pre>
+
+<h2 id="常用命令-1">常用命令</h2>
+
+<h3 id="docker-compose-up-build-d">docker-compose up &ndash;build -d</h3>
+
+<p>启动整个项目
+<code>--build</code> 代表重新构建容器
+<code>-d</code> 代表以daemon运行</p>
+
+<h3 id="docker-compose-stop">docker-compose stop</h3>
+
+<p>停止整个项目</p>
+
+<h3 id="docker-compose-ps">docker-compose ps</h3>
+
+<p>查看项目运行状态</p>
+
+<h3 id="docker-image-ls-a">docker image ls -a</h3>
+
+<p>列出所有下载的镜像</p>
+
+<h3 id="docker-container-ls-a">docker container ls -a</h3>
+
+<p>列出所有容器，包括停止的</p>
+
+<h3 id="docker-image-prune">docker image prune</h3>
+
+<p>清除无用的镜像，没被现存容器用到的，加 <code>-a</code> 是清除所有</p>
+
+<h3 id="docker-container-prune">docker container prune</h3>
+
+<p>清除所有容器</p>
+
+<h3 id="docker-exec-it-contaner-id-bash">docker exec -it <contaner id> bash</h3>
+
+<p>运行命令，进入容器</p>
+
+<h3 id="docker-compose-logs-tail-10-f">docker-compose logs &ndash;tail 10 -f</h3>
+
+<p>查看log
+<code>--tail 10</code> 代表读出最后10条
+<code>-f</code> 代表以daemon运行的项目读log时候不退出，不停打印最新的log</p>
+
+<h2 id="node项目样例">node项目样例</h2>
+
+<h3 id="dockfile">Dockfile</h3>
+
+<pre><code class="language-yaml">FROM node:latest
+
+#npm换源
+RUN npm config set registry https://registry.npm.taobao.org
+
+COPY ./package.json /home/node/package.json
+
+WORKDIR /home/node
+
+RUN npm install
+
+COPY ./ /home/node
+
+</code></pre>
+
+<h3 id="docker-compose-dot-yml">docker-compose.yml</h3>
+
+<pre><code class="language-yaml"> version: &quot;3&quot;
+ services:
+
+ node:
+     container_name: node
+     build: .
+     volumes:
+         - ./:/home/node
+     command: &quot;node test.js&quot;
+#tail -f /dev/null 用来保存容器运行状态
+</code></pre>
+
+	
+			
+
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/posts/git%E4%B8%A4%E7%A7%8D%E8%B5%B0%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F/">Git两种走代理方式</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2020. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    spacemacs项目解析 // jirex&#39;s Blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="[jirex]">
+<meta name="generator" content="Hugo 0.56.1" />
+
+
+  <meta property="og:title" content="spacemacs项目解析" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://jirex.netlify.com/posts/spacemacs/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://jirex.netlify.com//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="jirex&#39;s Blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">jirex&#39;s Blog</h1>
+    <h2 class="brand-tagline">Emacs, Org Mode, Docker
+iOS, Python, Php, Vue
+Programmer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://jirex.netlify.com/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="https://github.com/jirex" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="https://www.twitter.com/jirex1119" target="_blank"><i class='fa fa-twitter'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#文件读取顺序">文件读取顺序</a>
+<ul>
+<li><a href="#early-init-dot-el">early-init.el</a></li>
+<li><a href="#init-dot-el">init.el</a></li>
+<li><a href="#core-core-versions-dot-el">core/core-versions.el</a></li>
+<li><a href="#core-core-load-paths-dot-el">core/core-load-paths.el</a></li>
+<li><a href="#subr-x-dot-el">subr-x.el</a></li>
+<li><a href="#core-core-dotspacemacs-dot-el">core/core-dotspacemacs.el</a></li>
+<li><a href="#core-libs-load-env-vars-dot-el">core/libs/load-env-vars.el</a></li>
+<li><a href="#core-core-env-dot-el">core/core-env.el</a></li>
+<li><a href="#core-libs-page-break-lines-dot-el">core/libs/page-break-lines.el</a></li>
+<li><a href="#core-core-hooks-dot-el">core/core-hooks.el</a></li>
+<li><a href="#core-core-debug-dot-el">core/core-debug.el</a></li>
+<li><a href="#core-core-command-line-dot-el">core/core-command-line.el</a></li>
+<li><a href="#core-core-funcs-dot-el">core/core-funcs.el</a></li>
+<li><a href="#core-core-progress-bar-dot-el">core/core-progress-bar.el</a></li>
+<li><a href="#core-core-spacemacs-buffer-dot-el">core/core-spacemacs-buffer.el</a></li>
+<li><a href="#core-core-configuration-layer-dot-el">core/core-configuration-layer.el</a></li>
+<li><a href="#core-core-custom-file-dot-el">core/core-custom-file.el</a></li>
+<li><a href="#core-core-release-management-dot-el">core/core-release-management.el</a></li>
+<li><a href="#core-core-jump-dot-el">core/core-jump.el</a></li>
+<li><a href="#core-core-display-init-dot-el">core/core-display-init.el</a></li>
+<li><a href="#core-core-themes-support-dot-el">core/core-themes-support.el</a></li>
+<li><a href="#core-core-fonts-support-dot-el">core/core-fonts-support.el</a></li>
+<li><a href="#core-core-keybindings-dot-el">core/core-keybindings.el</a></li>
+<li><a href="#core-core-toggle-dot-el">core/core-toggle.el</a></li>
+<li><a href="#core-core-micro-state-dot-el">core/core-micro-state.el</a></li>
+<li><a href="#core-core-transient-state-dot-el">core/core-transient-state.el</a></li>
+<li><a href="#core-core-use-package-ext-dot-el">core/core-use-package-ext.el</a></li>
+<li><a href="#core-core-spacemacs-dot-el">core/core-spacemacs.el</a></li>
+</ul></li>
+<li><a href="#方法执行">方法执行</a>
+<ul>
+<li><a href="#spacemacs-init">spacemacs/init</a></li>
+<li><a href="#dotspacemacs-load-file">dotspacemacs/load-file</a></li>
+<li><a href="#dotspacemacs-init">dotspacemacs/init</a></li>
+<li><a href="#调整frame-是否需要decorated-frame">调整frame,是否需要decorated frame</a></li>
+<li><a href="#是否全屏">是否全屏</a></li>
+<li><a href="#如果不是dump模式-dotspacemacs-user-init">如果不是dump模式，dotspacemacs/user-init</a></li>
+<li><a href="#spacemacs-initialize-custom-file">spacemacs/initialize-custom-file</a></li>
+<li><a href="#设置-dotspacemacs-editing-style">设置 dotspacemacs-editing-style</a></li>
+<li><a href="#configuration-layer-initialize">configuration-layer/initialize</a></li>
+<li><a href="#设置获取package-timeout">设置获取package timeout</a></li>
+<li><a href="#设置elpa地址">设置elpa地址</a></li>
+<li><a href="#初始化elpa-packages库">初始化elpa packages库</a></li>
+<li><a href="#确保org是elpa的-而不是内置的-如果没有-就下载">确保org是elpa的，而不是内置的，如果没有，就下载</a></li>
+<li><a href="#设置frame-title">设置frame title</a></li>
+<li><a href="#加载默认主题">加载默认主题</a></li>
+<li><a href="#如果是gui-emacs-加载字体">如果是gui emacs，加载字体</a></li>
+<li><a href="#阻止emacs默认启动页面">阻止emacs默认启动页面</a></li>
+<li><a href="#加载spaecemacs-buffer">加载spaecemacs buffer</a></li>
+<li><a href="#如果不是gui-重新生成一次spacemacs-buffer">如果不是gui，重新生成一次spacemacs buffer</a></li>
+<li><a href="#加载环境变量">加载环境变量</a></li>
+<li><a href="#如果没有-dot-spacemacs就生成一个">如果没有.spacemacs就生成一个</a></li>
+<li><a href="#configuration-layer-stable-elpa-init">configuration-layer/stable-elpa-init</a></li>
+<li><a href="#configuration-layer-load">configuration-layer/load</a></li>
+<li><a href="#run-hook-configuration-layer-pre-load-hook">run hook <code>configuration-layer-pre-load-hook</code></a></li>
+<li><a href="#个人dotfile里面的theme都下载package">个人dotfile里面的theme都下载package</a></li>
+<li><a href="#读取上次保存的layers列表">读取上次保存的layers列表</a></li>
+<li><a href="#调用dotspacemacs-layers方法">调用dotspacemacs/layers方法</a></li>
+<li><a href="#判断两个layers列表是否有改变">判断两个layers列表是否有改变</a></li>
+<li><a href="#save当前layers到文件夹中">save当前layers到文件夹中</a></li>
+<li><a href="#configuration-layer-load-1">configuration-layer//load</a></li>
+<li><a href="#configuration-layer-discover-layers">configuration-layer/discover-layers</a></li>
+<li><a href="#configuration-layer-declare-used-layers">configuration-layer//declare-used-layers</a></li>
+<li><a href="#configuration-layer-declare-used-packages">configuration-layer//declare-used-packages</a></li>
+<li><a href="#加载每个layers下的-funcs-dot-el">加载每个layers下的 <code>funcs.el</code></a></li>
+<li><a href="#configuration-layer-configure-layers">configuration-layer//configure-layers</a></li>
+<li><a href="#如果官方layers文件夹下有-auto-layer-dot-el-加载他">如果官方layers文件夹下有 <code>auto-layer.el</code>, 加载他</a></li>
+<li><a href="#检查没有安装的包-不是lazy-install包">检查没有安装的包, 不是lazy install包</a></li>
+<li><a href="#configuration-layer-install-packages">configuration-layer//install-packages</a></li>
+<li><a href="#configuration-layer-delete-orphan-packages">configuration-layer/delete-orphan-packages</a></li>
+<li><a href="#spacemacs-buffer-display-startup-note">spacemacs-buffer/display-startup-note</a></li>
+<li><a href="#spacemacs-setup-startup-hook">spacemacs/setup-startup-hook</a></li>
+<li><a href="#设置第一页面为spacemacs-buffer">设置第一页面为spacemacs buffer</a></li>
+<li><a href="#开启winner-mode">开启winner-mode</a></li>
+<li><a href="#调用user-config方法">调用user-config方法</a></li>
+<li><a href="#调用custom-setting">调用custom setting</a></li>
+<li><a href="#run-hooks-spacemacs-post-user-config-hook">run-hooks &lsquo;spacemacs-post-user-config-hook</a></li>
+<li><a href="#加载用户主题">加载用户主题</a></li>
+<li><a href="#加载启动耗时">加载启动耗时</a></li>
+<li><a href="#spacemacs-buffer-startup-hook">spacemacs-buffer//startup-hook</a></li>
+<li><a href="#dump时加载延时方法">dump时加载延时方法</a></li>
+<li><a href="#启动完成">启动完成</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/posts/spacemacs/">spacemacs项目解析</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>25</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2020</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">[jirex]</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            
+
+<h2 id="文件读取顺序">文件读取顺序</h2>
+
+<h3 id="early-init-dot-el">early-init.el</h3>
+
+<p>emacs27专用</p>
+
+<h3 id="init-dot-el">init.el</h3>
+
+<h3 id="core-core-versions-dot-el">core/core-versions.el</h3>
+
+<p>spacemacs版本号设置</p>
+
+<h3 id="core-core-load-paths-dot-el">core/core-load-paths.el</h3>
+
+<ul>
+<li>load文件方法</li>
+<li>各种文件夹全局变量</li>
+</ul>
+
+<h3 id="subr-x-dot-el">subr-x.el</h3>
+
+<p>string增强</p>
+
+<h3 id="core-core-dotspacemacs-dot-el">core/core-dotspacemacs.el</h3>
+
+<p>自定义配置核心文件</p>
+
+<ul>
+<li><code>SPACEMACSDIR</code> 环境变量为自定义路径第一选择</li>
+<li>第二选择为用户home目录下 <code>.spacemacs.d</code></li>
+</ul>
+
+<h3 id="core-libs-load-env-vars-dot-el">core/libs/load-env-vars.el</h3>
+
+<p>读取环境变量库</p>
+
+<h3 id="core-core-env-dot-el">core/core-env.el</h3>
+
+<p>环境变量核心文件</p>
+
+<h3 id="core-libs-page-break-lines-dot-el">core/libs/page-break-lines.el</h3>
+
+<p>换页库</p>
+
+<h3 id="core-core-hooks-dot-el">core/core-hooks.el</h3>
+
+<p>hooks方法库</p>
+
+<h3 id="core-core-debug-dot-el">core/core-debug.el</h3>
+
+<p>debug方法库</p>
+
+<h3 id="core-core-command-line-dot-el">core/core-command-line.el</h3>
+
+<p>命令行方法库</p>
+
+<h3 id="core-core-funcs-dot-el">core/core-funcs.el</h3>
+
+<p>方法库</p>
+
+<h3 id="core-core-progress-bar-dot-el">core/core-progress-bar.el</h3>
+
+<p>启动进度条库</p>
+
+<h3 id="core-core-spacemacs-buffer-dot-el">core/core-spacemacs-buffer.el</h3>
+
+<p>home spacemacs buffer方法库</p>
+
+<h3 id="core-core-configuration-layer-dot-el">core/core-configuration-layer.el</h3>
+
+<p>layer核心方法库</p>
+
+<h3 id="core-core-custom-file-dot-el">core/core-custom-file.el</h3>
+
+<p>custom file方法库</p>
+
+<h3 id="core-core-release-management-dot-el">core/core-release-management.el</h3>
+
+<p>更新spacemacs方法库</p>
+
+<h3 id="core-core-jump-dot-el">core/core-jump.el</h3>
+
+<p>跳转定义等方法库</p>
+
+<h3 id="core-core-display-init-dot-el">core/core-display-init.el</h3>
+
+<p>??</p>
+
+<h3 id="core-core-themes-support-dot-el">core/core-themes-support.el</h3>
+
+<p>主题方法库</p>
+
+<h3 id="core-core-fonts-support-dot-el">core/core-fonts-support.el</h3>
+
+<p>字体设置</p>
+
+<h3 id="core-core-keybindings-dot-el">core/core-keybindings.el</h3>
+
+<p>按键映射库</p>
+
+<h3 id="core-core-toggle-dot-el">core/core-toggle.el</h3>
+
+<p>toggle方法库</p>
+
+<h3 id="core-core-micro-state-dot-el">core/core-micro-state.el</h3>
+
+<p>micro-state方法库</p>
+
+<h3 id="core-core-transient-state-dot-el">core/core-transient-state.el</h3>
+
+<p>transient-state方法库</p>
+
+<h3 id="core-core-use-package-ext-dot-el">core/core-use-package-ext.el</h3>
+
+<p>use-package增强</p>
+
+<h3 id="core-core-spacemacs-dot-el">core/core-spacemacs.el</h3>
+
+<p>spacemacs加载入口方法</p>
+
+<h2 id="方法执行">方法执行</h2>
+
+<h3 id="spacemacs-init">spacemacs/init</h3>
+
+<ol>
+<li>是否开启debug</li>
+<li>设置advice默认接受</li>
+<li>隐藏mode-line</li>
+<li>remove gui elements (tool bar&hellip;)</li>
+<li>设置ido-mode垂直显示</li>
+<li>设置coding utf-8</li>
+</ol>
+
+<h3 id="dotspacemacs-load-file">dotspacemacs/load-file</h3>
+
+<ol>
+<li>dotspacemacs/location</li>
+<li>dotspacemacs/load-file, 加载 <code>.spacemacs.el</code> 或者 <code>.spacemacs.d/init.el</code></li>
+</ol>
+
+<h3 id="dotspacemacs-init">dotspacemacs/init</h3>
+
+<p>自定义init.el里面设置spacemacs参数</p>
+
+<h3 id="调整frame-是否需要decorated-frame">调整frame,是否需要decorated frame</h3>
+
+<h3 id="是否全屏">是否全屏</h3>
+
+<h3 id="如果不是dump模式-dotspacemacs-user-init">如果不是dump模式，dotspacemacs/user-init</h3>
+
+<p>设置仓库地址等</p>
+
+<h3 id="spacemacs-initialize-custom-file">spacemacs/initialize-custom-file</h3>
+
+<p>加载custom file</p>
+
+<h3 id="设置-dotspacemacs-editing-style">设置 dotspacemacs-editing-style</h3>
+
+<p>edit style : vim</p>
+
+<h3 id="configuration-layer-initialize">configuration-layer/initialize</h3>
+
+<p>layer加载</p>
+
+<h3 id="设置获取package-timeout">设置获取package timeout</h3>
+
+<h3 id="设置elpa地址">设置elpa地址</h3>
+
+<h3 id="初始化elpa-packages库">初始化elpa packages库</h3>
+
+<h3 id="确保org是elpa的-而不是内置的-如果没有-就下载">确保org是elpa的，而不是内置的，如果没有，就下载</h3>
+
+<h3 id="设置frame-title">设置frame title</h3>
+
+<h3 id="加载默认主题">加载默认主题</h3>
+
+<h3 id="如果是gui-emacs-加载字体">如果是gui emacs，加载字体</h3>
+
+<h3 id="阻止emacs默认启动页面">阻止emacs默认启动页面</h3>
+
+<h3 id="加载spaecemacs-buffer">加载spaecemacs buffer</h3>
+
+<h3 id="如果不是gui-重新生成一次spacemacs-buffer">如果不是gui，重新生成一次spacemacs buffer</h3>
+
+<h3 id="加载环境变量">加载环境变量</h3>
+
+<h3 id="如果没有-dot-spacemacs就生成一个">如果没有.spacemacs就生成一个</h3>
+
+<h3 id="configuration-layer-stable-elpa-init">configuration-layer/stable-elpa-init</h3>
+
+<p>init stable elpa</p>
+
+<h3 id="configuration-layer-load">configuration-layer/load</h3>
+
+<p>加载layer</p>
+
+<h3 id="run-hook-configuration-layer-pre-load-hook">run hook <code>configuration-layer-pre-load-hook</code></h3>
+
+<h3 id="个人dotfile里面的theme都下载package">个人dotfile里面的theme都下载package</h3>
+
+<h3 id="读取上次保存的layers列表">读取上次保存的layers列表</h3>
+
+<h3 id="调用dotspacemacs-layers方法">调用dotspacemacs/layers方法</h3>
+
+<h3 id="判断两个layers列表是否有改变">判断两个layers列表是否有改变</h3>
+
+<h3 id="save当前layers到文件夹中">save当前layers到文件夹中</h3>
+
+<h3 id="configuration-layer-load-1">configuration-layer//load</h3>
+
+<p>真正加载layers</p>
+
+<h3 id="configuration-layer-discover-layers">configuration-layer/discover-layers</h3>
+
+<p>查找layers</p>
+
+<h3 id="configuration-layer-declare-used-layers">configuration-layer//declare-used-layers</h3>
+
+<p>已经使用的layers</p>
+
+<h3 id="configuration-layer-declare-used-packages">configuration-layer//declare-used-packages</h3>
+
+<p>已经使用的packages</p>
+
+<h3 id="加载每个layers下的-funcs-dot-el">加载每个layers下的 <code>funcs.el</code></h3>
+
+<h3 id="configuration-layer-configure-layers">configuration-layer//configure-layers</h3>
+
+<p>加载每个layers下的 <code>config.el</code></p>
+
+<h3 id="如果官方layers文件夹下有-auto-layer-dot-el-加载他">如果官方layers文件夹下有 <code>auto-layer.el</code>, 加载他</h3>
+
+<h3 id="检查没有安装的包-不是lazy-install包">检查没有安装的包, 不是lazy install包</h3>
+
+<h3 id="configuration-layer-install-packages">configuration-layer//install-packages</h3>
+
+<p>安装包</p>
+
+<h3 id="configuration-layer-delete-orphan-packages">configuration-layer/delete-orphan-packages</h3>
+
+<p>删除无用的包</p>
+
+<h3 id="spacemacs-buffer-display-startup-note">spacemacs-buffer/display-startup-note</h3>
+
+<p>启动备注</p>
+
+<h3 id="spacemacs-setup-startup-hook">spacemacs/setup-startup-hook</h3>
+
+<p>设置启动hook</p>
+
+<h3 id="设置第一页面为spacemacs-buffer">设置第一页面为spacemacs buffer</h3>
+
+<h3 id="开启winner-mode">开启winner-mode</h3>
+
+<h3 id="调用user-config方法">调用user-config方法</h3>
+
+<h3 id="调用custom-setting">调用custom setting</h3>
+
+<h3 id="run-hooks-spacemacs-post-user-config-hook">run-hooks &lsquo;spacemacs-post-user-config-hook</h3>
+
+<h3 id="加载用户主题">加载用户主题</h3>
+
+<h3 id="加载启动耗时">加载启动耗时</h3>
+
+<h3 id="spacemacs-buffer-startup-hook">spacemacs-buffer//startup-hook</h3>
+
+<p>buffer启动hook</p>
+
+<h3 id="dump时加载延时方法">dump时加载延时方法</h3>
+
+<h3 id="启动完成">启动完成</h3>
+
+	
+			
+
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="/posts/mysql5/">Mysql升级5.6出现incorrect default value问题</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/posts/org-mode/">org-mode</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2020. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

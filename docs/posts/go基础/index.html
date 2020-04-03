@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Go基础 // jirex&#39;s Blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="[jirex]">
+<meta name="generator" content="Hugo 0.56.1" />
+
+
+  <meta property="og:title" content="Go基础" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://jirex.netlify.com/posts/go%E5%9F%BA%E7%A1%80/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://jirex.netlify.com//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="jirex&#39;s Blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">jirex&#39;s Blog</h1>
+    <h2 class="brand-tagline">Emacs, Org Mode, Docker
+iOS, Python, Php, Vue
+Programmer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://jirex.netlify.com/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="https://github.com/jirex" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="https://www.twitter.com/jirex1119" target="_blank"><i class='fa fa-twitter'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#文件结构">文件结构</a></li>
+<li><a href="#语法">语法</a>
+<ul>
+<li><a href="#变量">变量</a></li>
+<li><a href="#常量">常量</a></li>
+<li><a href="#条件语句">条件语句</a>
+<ul>
+<li><a href="#if">if</a></li>
+<li><a href="#if-dot-dot-dot-else-dot-dot-dot">if&hellip;else&hellip;</a></li>
+<li><a href="#switch">switch</a></li>
+<li><a href="#select">select</a></li>
+</ul></li>
+<li><a href="#循环语句">循环语句</a>
+<ul>
+<li><a href="#for-init-condition-post">for init; condition; post { }</a></li>
+<li><a href="#for-condition">for condition { }</a></li>
+<li><a href="#for">for { }</a></li>
+</ul></li>
+<li><a href="#函数定义">函数定义</a></li>
+<li><a href="#数组">数组</a></li>
+<li><a href="#指针">指针</a></li>
+<li><a href="#切片--slice">切片 (slice)</a></li>
+<li><a href="#map--字典">Map (字典)</a></li>
+</ul></li>
+<li><a href="#命令行cli">命令行cli</a>
+<ul>
+<li><a href="#go-run-main-dot-go">go run <code>main.go</code></a></li>
+<li><a href="#go-build-main-dot-go">go build <code>main.go</code></a></li>
+<li><a href="#go-fmt-main-dot-go">go fmt <code>main.go</code></a></li>
+</ul></li>
+<li><a href="#tips">Tips</a>
+<ul>
+<li><a href="#不能单独放一行"><code>{</code> 不能单独放一行</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/posts/go%E5%9F%BA%E7%A1%80/">Go基础</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>27</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2020</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">[jirex]</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            
+
+<h2 id="文件结构">文件结构</h2>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+    //comment
+    fmt.Println(&quot;Hello, World&quot;)
+}
+</code></pre>
+
+<ol>
+<li>包名，每个程序都包含一个main包</li>
+<li>需要引入的包</li>
+<li>执行函数</li>
+<li><code>//</code> 开头单行注释 <code>/*...*/</code> 多行注释</li>
+</ol>
+
+<h2 id="语法">语法</h2>
+
+<h3 id="变量">变量</h3>
+
+<pre><code class="language-go">var a string = &quot;hello&quot;
+
+var b int
+
+var c bool
+
+var d = true
+
+e := 1
+</code></pre>
+
+<h3 id="常量">常量</h3>
+
+<pre><code class="language-go">const a int = 1
+const (
+    b = &quot;hello&quot;
+    c = false
+)
+</code></pre>
+
+<h3 id="条件语句">条件语句</h3>
+
+<h4 id="if">if</h4>
+
+<pre><code class="language-go">if a &lt; 20 {
+    fmt.Print(&quot;11&quot;)
+}
+</code></pre>
+
+<h4 id="if-dot-dot-dot-else-dot-dot-dot">if&hellip;else&hellip;</h4>
+
+<pre><code class="language-go">if a &lt; 20 {
+    fmt.Print(&quot;11&quot;)
+} else {
+    fmt.Print(&quot;22&quot;)
+}
+</code></pre>
+
+<h4 id="switch">switch</h4>
+
+<pre><code class="language-go">switch {
+    case grade == &quot;A&quot; :
+        fmt.Printf(&quot;优秀!\n&quot; )
+    case grade == &quot;B&quot;, grade == &quot;C&quot; :
+        fmt.Printf(&quot;良好\n&quot; )
+    case grade == &quot;D&quot; :
+        fmt.Printf(&quot;及格\n&quot; )
+    case grade == &quot;F&quot;:
+        fmt.Printf(&quot;不及格\n&quot; )
+    default:
+        fmt.Printf(&quot;差\n&quot; );
+}
+</code></pre>
+
+<h4 id="select">select</h4>
+
+<pre><code class="language-go">var c1, c2, c3 chan int
+var i1, i2 int
+select {
+    case i1 = &lt;-c1:
+        fmt.Printf(&quot;received &quot;, i1, &quot; from c1\n&quot;)
+    case c2 &lt;- i2:
+        fmt.Printf(&quot;sent &quot;, i2, &quot; to c2\n&quot;)
+    case i3, ok := (&lt;-c3):  // same as: i3, ok := &lt;-c3
+        if ok {
+        fmt.Printf(&quot;received &quot;, i3, &quot; from c3\n&quot;)
+        } else {
+        fmt.Printf(&quot;c3 is closed\n&quot;)
+        }
+    default:
+        fmt.Printf(&quot;no communication\n&quot;)
+}
+</code></pre>
+
+<h3 id="循环语句">循环语句</h3>
+
+<h4 id="for-init-condition-post">for init; condition; post { }</h4>
+
+<pre><code class="language-go">sum := 0
+for i := 0; i &lt;= 10; i++ {
+    sum += i
+}
+</code></pre>
+
+<h4 id="for-condition">for condition { }</h4>
+
+<pre><code class="language-go">for key, value := range oldMap {
+    newMap[key] = value
+}
+</code></pre>
+
+<h4 id="for">for { }</h4>
+
+<pre><code class="language-go">sum := 0
+for {
+    sum++ // 无限循环下去
+}
+</code></pre>
+
+<h3 id="函数定义">函数定义</h3>
+
+<pre><code class="language-go">func max(a, b) int {
+    var result int
+
+    if (a &gt; b) {
+        result = a
+    } else {
+        result = b
+    }
+    return result
+}
+
+max(1,2)
+
+//多返回值
+func swap(x, y string) (string, string) {
+   return y, x
+}
+
+func main() {
+   a, b := swap(&quot;Google&quot;, &quot;Runoob&quot;)
+   fmt.Println(a, b)
+}
+</code></pre>
+
+<ul>
+<li>方法名首字母大写的为包pulic方法</li>
+<li>方法名首字母小写的为包private方法</li>
+</ul>
+
+<h3 id="数组">数组</h3>
+
+<pre><code class="language-go">var variable_name [SIZE] variable_type
+var balance [10] float32
+</code></pre>
+
+<h3 id="指针">指针</h3>
+
+<pre><code class="language-go">var a int= 20   /* 声明实际变量 */
+var ip *int        /* 声明指针变量 */
+
+ip = &amp;a  /* 指针变量的存储地址 */
+
+fmt.Printf(&quot;a 变量的地址是: %x\n&quot;, &amp;a  )
+
+/* 指针变量的存储地址 */
+fmt.Printf(&quot;ip 变量储存的指针地址: %x\n&quot;, ip )
+
+/* 使用指针访问值 */
+fmt.Printf(&quot;*ip 变量的值: %d\n&quot;, *ip )
+</code></pre>
+
+<h3 id="切片--slice">切片 (slice)</h3>
+
+<pre><code class="language-go">// int类型动态数组
+var arr1 []int
+//另一种写法, 3是初始长度
+var arr1 []int = make([]int, 3)
+//简写
+arr1 := make([]int, 3)
+</code></pre>
+
+<h3 id="map--字典">Map (字典)</h3>
+
+<pre><code class="language-go">var map_variable map[key_data_type]value_data_type
+map_variable := make(map[key_data_type]value_data_type)
+
+var dict map[string]string
+//简写
+dict := make(map[string]string)
+
+dict[&quot;a&quot;] = &quot;11111&quot;
+</code></pre>
+
+<h2 id="命令行cli">命令行cli</h2>
+
+<h3 id="go-run-main-dot-go">go run <code>main.go</code></h3>
+
+<p>执行go文件</p>
+
+<h3 id="go-build-main-dot-go">go build <code>main.go</code></h3>
+
+<p>生成可执行文件</p>
+
+<h3 id="go-fmt-main-dot-go">go fmt <code>main.go</code></h3>
+
+<p>格式化文件</p>
+
+<h2 id="tips">Tips</h2>
+
+<h3 id="不能单独放一行"><code>{</code> 不能单独放一行</h3>
+
+	
+			
+
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="/posts/org-mode/">org-mode</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/">Git submodule</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2020. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
