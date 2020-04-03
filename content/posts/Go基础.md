@@ -1,7 +1,7 @@
 +++
 title = "Go基础"
 author = ["jirex"]
-lastmod = 2020-03-27T22:23:09+08:00
+lastmod = 2020-04-02T22:03:21-07:00
 draft = false
 +++
 
@@ -228,6 +228,37 @@ var dict map[string]string
 dict := make(map[string]string)
 
 dict["a"] = "11111"
+```
+
+
+### 结构体 struct {#结构体-struct}
+
+```go
+type Person struct {
+    Name string
+    Age int
+}
+
+func (p *Person) SayHello() {
+    fmt.Println("hello, ", p.Name)
+}
+
+func main() {
+    var guy = new(Person)
+    guy.name = "jirex"
+    guy.SayHello()
+}
+```
+
+
+### interface {#interface}
+
+蓝图
+
+```go
+type Friend interface {
+    SayHello()
+}
 ```
 
 

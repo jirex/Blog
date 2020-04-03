@@ -142,6 +142,8 @@ Programmer</h2>
 <li><a href="#指针">指针</a></li>
 <li><a href="#切片--slice">切片 (slice)</a></li>
 <li><a href="#map--字典">Map (字典)</a></li>
+<li><a href="#结构体-struct">结构体 struct</a></li>
+<li><a href="#interface">interface</a></li>
 </ul></li>
 <li><a href="#命令行cli">命令行cli</a>
 <ul>
@@ -168,7 +170,7 @@ Programmer</h2>
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-day"><sup>27</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2020</span>
+                	<span class="post-date-day"><sup>2</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Apr</span> <span class="post-date-year">2020</span>
             	</span>
             	
             
@@ -388,6 +390,33 @@ dict := make(map[string]string)
 dict[&quot;a&quot;] = &quot;11111&quot;
 </code></pre>
 
+<h3 id="结构体-struct">结构体 struct</h3>
+
+<pre><code class="language-go">type Person struct {
+    Name string
+    Age int
+}
+
+func (p *Person) SayHello() {
+    fmt.Println(&quot;hello, &quot;, p.Name)
+}
+
+func main() {
+    var guy = new(Person)
+    guy.name = &quot;jirex&quot;
+    guy.SayHello()
+}
+</code></pre>
+
+<h3 id="interface">interface</h3>
+
+<p>蓝图</p>
+
+<pre><code class="language-go">type Friend interface {
+    SayHello()
+}
+</code></pre>
+
 <h2 id="命令行cli">命令行cli</h2>
 
 <h3 id="go-run-main-dot-go">go run <code>main.go</code></h3>
@@ -417,16 +446,11 @@ dict[&quot;a&quot;] = &quot;11111&quot;
 					
 					<div class="paging-newer">
 						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="/posts/org-mode/">org-mode</a>
+						<a class="paging-link" href="/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/">Git submodule</a>
 		            </div>
 		            
 
 					
-					<div class="paging-older">
-						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/">Git submodule</a>
-		            </div>
-		            
 	            </div>
             
           </section>
