@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>git on Hackerwiz</title>
+    <link>https://hackerwiz.com/tags/git/</link>
+    <description>Recent content in git on Hackerwiz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 28 Mar 2020 22:05:20 +0800</lastBuildDate><atom:link href="https://hackerwiz.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git submodule</title>
+      <link>https://hackerwiz.com/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sat, 28 Mar 2020 22:05:20 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/</guid>
+      <description>添加 git submodule add git@github.com:repo site-lisp/repo 删除 git -rm --cached site-lisp/repo rm -rf site-lisp/repo rm -rf .git/modules/repo  #remove submodule info vim .git/config vim .gitmodules </description>
+    </item>
+    
+    <item>
+      <title>Git两种走代理方式</title>
+      <link>https://hackerwiz.com/posts/git%E4%B8%A4%E7%A7%8D%E8%B5%B0%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Wed, 25 Mar 2020 17:11:23 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/git%E4%B8%A4%E7%A7%8D%E8%B5%B0%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
+      <description>HTTP形式 git clone https://github/owner/repo.git
+#设置 git config --global http.proxy &amp;#34;socks5://127.0.0.1:1080&amp;#34; git config --global https.proxy &amp;#34;socks5://127.0.0.1:1080&amp;#34; #取消 git config --global --unset http.proxy git config --global --unset https.proxy SSH形式 git clone git@github.com:owner/repo.git
+#修改 ~/.ssh/config 文件（不存在则新建）：~ Host github.com #多ssh key时，可设别名  HostName github.com  User git  # 走 HTTP 代理  ProxyCommand socat - PROXY:127.0.0.1:%h:%p,proxyport=8080  # 走 socks5 代理（如 Shadowsocks）  ProxyCommand nc -v -x 127.0.0.1:1080 %h %p </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hackerwiz</title>
+    <link>https://hackerwiz.com/</link>
+    <description>Recent content on Hackerwiz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 10 Apr 2020 15:32:12 +0800</lastBuildDate><atom:link href="https://hackerwiz.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rime输入法</title>
+      <link>https://hackerwiz.com/posts/rime/</link>
+      <pubDate>Fri, 10 Apr 2020 15:32:12 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/rime/</guid>
+      <description>配置文件要求  UTF-8编码 建议用UNIX换行符 (LF) 第一行为注释，防止BOM头影响  # RIME default setting 文件及作用 共享文件夹 &amp;quot;/Library/Input Methods/Squirrel.app/Contents/SharedSupport/&amp;quot;
+用户文件夹 ~/Library/Rime/
+ default.yaml 全局设定 weasel.yaml 发行版设定 &amp;lt;方案标识&amp;gt;.schema.yaml 预设输入方案副本 installation.yaml 安装信息 user.yaml 用户状态信息 &amp;lt;方案标识&amp;gt;.prism.bin Rime棱镜 &amp;lt;词典名&amp;gt;.table.bin Rime固态词典 &amp;lt;词典名&amp;gt;.reverse.bin Rime反查词典 &amp;lt;词典名&amp;gt;.userdb.kct 用户词典 &amp;lt;词典名&amp;gt;.userdb.txt 用户词典快照 default.custom.yaml 用户全局设定的定制信息 &amp;lt;方案标识&amp;gt;.custom.yaml 用户对预设输入方案的定制信息  方案定义 schema.yaml  描述  # 以下代碼片段節選自 luna_pinyin.schema.yaml  schema:  schema_id: luna_pinyin  name: 朙月拼音  version: &amp;#34;0.9&amp;#34;  author:  - 佛振 &amp;lt;chen.sst@gmail.com&amp;gt;  description: | Rime 預設的拼音輸入方案。  开关  ascii_mode 中英文转换开关 full_shape 全角/半角符号开关 extended_charset 字符集开关 simplification 简/繁转化字开关    switches:  - name: ascii_mode  reset: 0  states: [&amp;#34;中文&amp;#34;, &amp;#34;西文&amp;#34;]  - name: full_shape  states: [&amp;#34;半角&amp;#34;, &amp;#34;全角&amp;#34;]  - name: extended_charset  states: [&amp;#34;通用&amp;#34;, &amp;#34;增廣&amp;#34;]  - name: simplification  states: [&amp;#34;漢字&amp;#34;, &amp;#34;汉字&amp;#34;]  - name: ascii_punct  states: [&amp;#34;句讀&amp;#34;, &amp;#34;符號&amp;#34;] </description>
+    </item>
+    
+    <item>
+      <title>Go基础</title>
+      <link>https://hackerwiz.com/posts/go%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Thu, 02 Apr 2020 22:03:21 -0700</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/go%E5%9F%BA%E7%A1%80/</guid>
+      <description>文件结构 package main  import &amp;#34;fmt&amp;#34;  func main() {  //comment  fmt.Println(&amp;#34;Hello, World&amp;#34;) }  包名，每个程序都包含一个main包 需要引入的包 执行函数 // 开头单行注释 /*...*/ 多行注释  语法 变量 var a string = &amp;#34;hello&amp;#34;  var b int  var c bool  var d = true  e := 1 常量 const a int = 1 const (  b = &amp;#34;hello&amp;#34;  c = false ) 条件语句 if if a &amp;lt; 20 {  fmt.</description>
+    </item>
+    
+    <item>
+      <title>Git submodule</title>
+      <link>https://hackerwiz.com/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Sat, 28 Mar 2020 22:05:20 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/git%E5%AD%90%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86/</guid>
+      <description>添加 git submodule add git@github.com:repo site-lisp/repo 删除 git -rm --cached site-lisp/repo rm -rf site-lisp/repo rm -rf .git/modules/repo  #remove submodule info vim .git/config vim .gitmodules </description>
+    </item>
+    
+    <item>
+      <title>org-mode</title>
+      <link>https://hackerwiz.com/posts/org-mode/</link>
+      <pubDate>Thu, 26 Mar 2020 09:26:34 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/org-mode/</guid>
+      <description>语法 bold italic underlined code verbatim 中划线 google 外部链接[[][]],前面是链接, 后面是文字
+ 内部链接
+TODO first todo 无序列表  xxx yyy zzz  有序列表  111 222 333  子任务 [0/1]  [-] 大分类 [1/2] 中分类1 [-] 中分类2  小分类1 小分类2      标签  位置：只能在各级标题的行末端, 只能在标题行 命名：可以包含数字、字幕、下划线或@符合  :label1:label2:
+时间戳  &amp;lt;&amp;gt; 激活的时间，加入日程表 [] 非激活的时间，不加入日程表 -- 连接的两个时间戳，表示时间段  src block &amp;lt;s &amp;lt;tab&amp;gt; 代码块
+echo &amp;#34;hello world&amp;#34; 配置 todo关键字 (setq org-todo-keywords &amp;#39;((type &amp;#34;工作(w!</description>
+    </item>
+    
+    <item>
+      <title>spacemacs项目解析</title>
+      <link>https://hackerwiz.com/posts/spacemacs/</link>
+      <pubDate>Wed, 25 Mar 2020 17:21:32 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/spacemacs/</guid>
+      <description>文件读取顺序 early-init.el emacs27专用
+init.el core/core-versions.el spacemacs版本号设置
+core/core-load-paths.el  load文件方法 各种文件夹全局变量  subr-x.el string增强
+core/core-dotspacemacs.el 自定义配置核心文件
+ SPACEMACSDIR 环境变量为自定义路径第一选择 第二选择为用户home目录下 .spacemacs.d  core/libs/load-env-vars.el 读取环境变量库
+core/core-env.el 环境变量核心文件
+core/libs/page-break-lines.el 换页库
+core/core-hooks.el hooks方法库
+core/core-debug.el debug方法库
+core/core-command-line.el 命令行方法库
+core/core-funcs.el 方法库
+core/core-progress-bar.el 启动进度条库
+core/core-spacemacs-buffer.el home spacemacs buffer方法库
+core/core-configuration-layer.el layer核心方法库
+core/core-custom-file.el custom file方法库
+core/core-release-management.el 更新spacemacs方法库
+core/core-jump.el 跳转定义等方法库
+core/core-display-init.el ??
+core/core-themes-support.el 主题方法库
+core/core-fonts-support.el 字体设置
+core/core-keybindings.el 按键映射库
+core/core-toggle.el toggle方法库
+core/core-micro-state.el micro-state方法库
+core/core-transient-state.el transient-state方法库
+core/core-use-package-ext.el use-package增强
+core/core-spacemacs.el spacemacs加载入口方法
+方法执行 spacemacs/init  是否开启debug 设置advice默认接受 隐藏mode-line remove gui elements (tool bar&amp;hellip;) 设置ido-mode垂直显示 设置coding utf-8  dotspacemacs/load-file  dotspacemacs/location dotspacemacs/load-file, 加载 .</description>
+    </item>
+    
+    <item>
+      <title>Mysql升级5.6出现incorrect default value问题</title>
+      <link>https://hackerwiz.com/posts/mysql5/</link>
+      <pubDate>Wed, 25 Mar 2020 17:20:13 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/mysql5/</guid>
+      <description>修改my.ini, MAMP可以在conf目录下新建my.cnf
+[mysqlid] sql_mode = &amp;#34;&amp;#34; [2019-07-29 Mon 14:19]</description>
+    </item>
+    
+    <item>
+      <title>Git两种走代理方式</title>
+      <link>https://hackerwiz.com/posts/git%E4%B8%A4%E7%A7%8D%E8%B5%B0%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Wed, 25 Mar 2020 17:11:23 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/git%E4%B8%A4%E7%A7%8D%E8%B5%B0%E4%BB%A3%E7%90%86%E6%96%B9%E5%BC%8F/</guid>
+      <description>HTTP形式 git clone https://github/owner/repo.git
+#设置 git config --global http.proxy &amp;#34;socks5://127.0.0.1:1080&amp;#34; git config --global https.proxy &amp;#34;socks5://127.0.0.1:1080&amp;#34; #取消 git config --global --unset http.proxy git config --global --unset https.proxy SSH形式 git clone git@github.com:owner/repo.git
+#修改 ~/.ssh/config 文件（不存在则新建）：~ Host github.com #多ssh key时，可设别名  HostName github.com  User git  # 走 HTTP 代理  ProxyCommand socat - PROXY:127.0.0.1:%h:%p,proxyport=8080  # 走 socks5 代理（如 Shadowsocks）  ProxyCommand nc -v -x 127.0.0.1:1080 %h %p </description>
+    </item>
+    
+    <item>
+      <title>Docker学习笔记</title>
+      <link>https://hackerwiz.com/posts/docker/</link>
+      <pubDate>Wed, 25 Mar 2020 14:05:41 +0800</pubDate>
+      
+      <guid>https://hackerwiz.com/posts/docker/</guid>
+      <description>概念 镜像 （image)   相当于启动盘，系统盘
+  分层存储，有点像git，类似指针的概念
+    容器 （container)  从镜像启动，类 和 实例的关系 会在镜像基础上，添加一层存储层，但容器被删除时，存储层的改变也会被删除，所以不要在里面写入任何数据，用数据卷  仓库 （Repository）  镜像的仓库  安装 centos   删除旧版本
+sudo yum remove docker \  docker-client \  docker-client-latest \  docker-common \  docker-latest \  docker-latest-logrotate \  docker-logrotate \  docker-selinux \  docker-engine-selinux \  docker-engine   使用yum安装
+# step 1: 安装必要的一些系统工具 sudo yum install -y yum-utils device-mapper-persistent-data lvm2 # Step 2: 添加软件源信息 sudo yum-config-manager --add-repo http://mirrors.</description>
+    </item>
+    
+  </channel>
+</rss>

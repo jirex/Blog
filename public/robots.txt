@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://hackerwiz.com/sitemap.xml
